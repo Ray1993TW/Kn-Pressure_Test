@@ -1,4 +1,4 @@
-# Kinect Pressure text with Age and Gender recognition
+# Kinect Pressure test with Age and Gender recognition
 
 ### Version and Requirement
 1. python -> [3.5.4](https://www.python.org/downloads/release/python-354/)
