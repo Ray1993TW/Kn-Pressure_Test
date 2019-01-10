@@ -1,11 +1,7 @@
-import configparser
-cfg = configparser.ConfigParser()
-try:
-	cfg.read('API-client.cfg')
-except:
-	return 'Config file not exist.'
-
 import requests, json, cv2
+
+url1 = ''
+url2 = ''
 
 content_type = 'image/jpeg'
 headers = {'content-type': content_type}
@@ -22,8 +18,8 @@ class useAPI:
 
 	def get_answer(self):
 		try:
-			response1 = requests.post(cfg.get('net', url1), data=self.img_encoded.tostring(), headers=headers, timeout = 3)
-			response2 = requests.post(cfg.get('net', url2), data=self.img_encoded.tostring(), headers=headers, timeout = 3)
+			response1 = requests.post(url1, data=self.img_encoded.tostring(), headers=headers, timeout = 3)
+			response2 = requests.post(url2, data=self.img_encoded.tostring(), headers=headers, timeout = 3)
 
 			get_json1 = json.loads(response1.text)
 			get_json2 = json.loads(response2.text)

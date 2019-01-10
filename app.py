@@ -62,6 +62,9 @@ class AppWindow(QMainWindow, mainWindow.Ui_MainWindow):
 			for faces in range(len(facefile)):
 				x1, y1, x2, y2 = facefile[faces][0]
 
+				if x1<0:x1=0
+				if y1<0:y1=0
+
 				self.predict_ans = client.useAPI(frame[y1:y2, x1:x2]).get_answer()
 
 				if self.predict_ans == 'e':
