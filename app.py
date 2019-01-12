@@ -1,5 +1,5 @@
 import configparser
-cfg = configparser.ConfigParser
+cfg = configparser.ConfigParser()
 cfg.read('app.cfg')
 
 import os, sys, cv2, time
@@ -9,7 +9,13 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtGui import QPixmap, QImage
 
-with open(cfg.get('log', 'url_sys'), 'a') as srw:
+for root, dirs, files in os.walk('./'):
+	if not cfg.get('log', 'log_dir') in dirs: os.mkdir(cfg.get('log', 'log_dir'))
+	if not cfg.get('file', 'img_save_dir') in dirs: os.mkdir(cfg.get('file', 'img_save_dir'))
+log_dir = cfg.get('log', 'log_dir')
+
+
+with open(os.join(log_dir, cfg.get('log', 'log_sys')), 'a') as srw:
 	srw.writelines(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+' '+'open')
 	srw.write('\n')
 srw.close()
@@ -77,7 +83,7 @@ class AppWindow(QMainWindow, mainWindow.Ui_MainWindow):
 				texts = self.pred_gender+', '+str(int(self.pred_age)-4)+'~'+str(int(self.pred_age)+1)
 				cv2.putText(color, texts, (x1,y1-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2, cv2.LINE_AA)
 				cv2.rectangle(color, (x1, y1), (x2, y2), (255,0,0), 3)
-				with open(cfg.get('log', 'url_recg'), 'a') as rrw:
+				with open(os.join(log_dir, cfg.get('log', 'log_recg')), 'a') as rrw:
 					rrw.writelines(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+' '+self.pred_gender+', '+str(self.pred_age))
 					rrw.write('\n')
 				rrw.close()
@@ -106,7 +112,7 @@ class AppWindow(QMainWindow, mainWindow.Ui_MainWindow):
 		print('camera close')
 		self.close()
 
-		with open(cfg.get('log', 'url_sys'), 'a') as srw:
+		with open(os.join(log_dir, cfg.get('log', 'log_sys')), 'a') as srw:
 			srw.writelines(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+' '+'system/close')
 			srw.write('\n')
 		srw.close()
