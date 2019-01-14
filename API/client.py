@@ -1,7 +1,6 @@
 import requests, json, cv2
 
 url1 = ''
-url2 = ''
 
 content_type = 'image/jpeg'
 headers = {'content-type': content_type}
@@ -19,11 +18,9 @@ class useAPI:
 	def get_answer(self):
 		try:
 			response1 = requests.post(url1, data=self.img_encoded.tostring(), headers=headers, timeout = 3)
-			response2 = requests.post(url2, data=self.img_encoded.tostring(), headers=headers, timeout = 3)
 
 			get_json1 = json.loads(response1.text)
-			get_json2 = json.loads(response2.text)
-			return (get_json1,get_json2)
+			return get_json1
 		except:
 			return 'e'
 			
